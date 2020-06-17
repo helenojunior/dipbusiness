@@ -29,6 +29,7 @@ echo ""
 yum install wget mtr dos2unix vim mlocate nmap tcpdump mc nano lynx rsync minicom screen htop subversion deltarpm issabel-callcenter -y
 updatedb
 echo ""
+yum -y dos2unix
 echo "Atualizando o sistema..."
 echo ""
 yum -y update && yum -y upgrade
