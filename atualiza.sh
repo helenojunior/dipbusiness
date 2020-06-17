@@ -18,7 +18,7 @@ echo "Patch DIP Business"
 echo "http://www.digiserve.com.br / 054 3289-5000"
 echo "======================================================="
 echo ""
-echo "Contribuição da Comunidade"
+echo "Contribuição da Comunidade, em especial o colega Rafael Tavares"
 echo ""
 sleep 15
 echo ""
