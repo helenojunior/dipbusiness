@@ -35,7 +35,7 @@ echo ""
 yum install dos2unix -y
 echo "Atualizando o sistema..."
 echo ""
-;;yum -y update && yum -y upgrade
+yum -y update && yum -y upgrade
 echo ""
 echo "Instalando patch de idiomas, cdr e bilhetagem..."
 echo ""
