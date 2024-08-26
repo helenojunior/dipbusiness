@@ -29,13 +29,21 @@ echo "INICIANDO O PROCESSO..."
 echo ""
 echo "Instalando ferramentas úteis..."
 echo ""
-yum install wget mtr dos2unix vim mlocate nmap tcpdump mc nano lynx rsync minicom screen htop subversion deltarpm issabel-callcenter -y
+sed -i s/http:/https:/g /etc/yum.repos.d/C*.repo
+sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/C*.repo
+sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/C*.repo
+sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/C*.repo
+echo ""
+yum install wget mtr dos2unix vim mlocate nmap tcpdump mc nano lynx rsync minicom screen htop subversion deltarpm issabel-callcenter socat lame dos2unix yum-utils -y
 updatedb
 echo ""
-yum install dos2unix -y
 echo "Atualizando o sistema..."
 echo ""
 yum -y update && yum -y upgrade
+sed -i s/http:/https:/g /etc/yum.repos.d/C*.repo
+sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/C*.repo
+sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/C*.repo
+sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/C*.repo
 echo ""
 echo "Instalando patch de idiomas, cdr e bilhetagem..."
 echo ""
@@ -58,6 +66,7 @@ sed -i '/defaultlanguage=pt_BR/d' /etc/asterisk/asterisk.conf
 echo "defaultlanguage=pt_BR" >> /etc/asterisk/asterisk.conf
 echo ""
 #echo "Instalando codec g729"
+yum install asterisk-codec-g729 -y
 #echo ""
 echo "Instalando tratamento Hangup Cause"
 echo ""
@@ -105,12 +114,18 @@ echo ""
 echo "Instalando sngrep"
 echo "" 
 rm -Rf /etc/yum.repos.d/irontec.repo
-cat > /etc/yum.repos.d/irontec.repo <<EOF
-[irontec]
-name=Irontec RPMs repository
-baseurl=http://packages.irontec.com/centos/\$releasever/\$basearch/
-EOF
-rpm --import http://packages.irontec.com/public.key
+echo '[copr:copr.fedorainfracloud.org:irontec:sngrep]
+name=Copr repo for sngrep owned by irontec
+baseurl=https://download.copr.fedorainfracloud.org/results/irontec/sngrep/epel-7-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/irontec/sngrep/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
+' > /etc/yum.repos.d/irontec.repo
+rpm --import https://download.copr.fedorainfracloud.org/results/irontec/sngrep/pubkey.gpg
 yum install sngrep -y
 echo ""
 wget https://bintray.com/ookla/rhel/rpm -O /etc/yum.repos.d/bintray-ookla-rhel.repo
