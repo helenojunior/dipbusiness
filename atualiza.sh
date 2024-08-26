@@ -145,7 +145,14 @@ echo ""
 echo "ALTERANDO MUSICONHOLD AGENTS"
 echo ""
 sed -i -r 's/;musiconhold=default/musiconhold=none/' /etc/asterisk/agents.conf
+sed -i s/http:/https:/g /etc/yum.repos.d/C*.repo
+sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/C*.repo
+sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/C*.repo
+sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/C*.repo
 rm -Rf /usr/src/IssabelBR
+amportal a ma install trunkbalance
+amportal a ma upgradeall
+amportal reload
 amportal restart
 clear
 echo "" 
